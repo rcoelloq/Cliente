@@ -48,6 +48,12 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setText("Clave:");
 
+        txtUserName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserNameActionPerformed(evt);
+            }
+        });
+
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,23 +105,37 @@ public class Login extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String user     = "", password = "", trama="";
         String delimited= "/";
+
+
         try {
             // obtengo la ip de la computadora e inicio la coneccion con el servidor
             System.out.println("ip interna"+Inet4Address.getLocalHost().getHostAddress());
-            Messenger.initCliente(Inet4Address.getLocalHost().getHostAddress());
-            
+            if(Conector.s == null)
+            {   System.out.println("Abre conexion via socket...");
+                Messenger.initCliente(Inet4Address.getLocalHost().getHostAddress());
+            }
             
             user     = this.txtUserName.getText();
             password = String.valueOf(this.txtClave.getPassword());
             trama    = user + delimited + password;
             //Envio usuario y clave
              Messenger.cliente.enviarMSG(trama);
-             
+                
         } catch (UnknownHostException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } catch (Exception exe) {
+            System.out.println("Ocurrion una excepcion al tratr de iniciar sesion"+ exe);
+        } finally {
+            this.txtUserName.setText("");
+            this.txtClave.setText("");
         }
         
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void txtUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUserNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,4 +181,5 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtClave;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
+
 }
