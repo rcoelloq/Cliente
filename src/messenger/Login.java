@@ -105,8 +105,7 @@ public class Login extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String user     = "", password = "", trama="";
         String delimited= "/";
-
-
+        
         try {
             // obtengo la ip de la computadora e inicio la coneccion con el servidor
             System.out.println("ip interna"+Inet4Address.getLocalHost().getHostAddress());
